@@ -34,3 +34,29 @@ async function loadLeaderboard() {
 }
 
 loadLeaderboard();
+
+function selectTask(taskId) {
+  const details = document.getElementById("taskDetails");
+
+  const taskData = {
+    task1: {
+      title: "Task 1",
+      desc: "This is the first task. Do something interesting here."
+    },
+    task2: {
+      title: "Task 2",
+      desc: "This task involves collecting points."
+    },
+    task3: {
+      title: "Task 3",
+      desc: "Final challenge task."
+    }
+  };
+
+  const task = taskData[taskId];
+
+  details.innerHTML = `
+    <h3>${task.title}</h3>
+    <p>${task.desc}</p>
+  `;
+}

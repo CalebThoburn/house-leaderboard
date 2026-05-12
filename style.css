@@ -1,0 +1,55 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #1f2a36; /* dark blue-grey */
+  color: #e6eef5;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 100vh;
+}
+
+.panel {
+  padding: 20px;
+  overflow-y: auto;
+  border-right: 1px solid #2c3b4a;
+}
+
+.left {
+  background: #263445;
+}
+
+.middle {
+  background: #223041;
+}
+
+.right {
+  background: #1f2a36;
+}
+
+/* Leaderboard styling */
+#leaderboard li {
+  list-style: none;
+  padding: 8px;
+  margin: 5px 0;
+  background: #2e3f52;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Tasks */
+.task {
+  padding: 10px;
+  margin: 8px 0;
+  background: #2e3f52;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.task:hover {
+  background: #3a5168;
+}
