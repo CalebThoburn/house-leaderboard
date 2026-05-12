@@ -13,7 +13,7 @@ async function loadLeaderboard() {
       pfp: cols[2]?.trim()
     };
   });
-
+  console.log(cols);
   const list = document.getElementById("leaderboard");
   list.innerHTML = "";
 
