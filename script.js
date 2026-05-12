@@ -188,7 +188,7 @@ function initQuotes() {
     const current = createQuoteElement(quotes[quoteIndex], "quote-item quote-center");
     container.appendChild(current);
 
-    setInterval(nextQuote, 1200);
+    setInterval(nextQuote, 700);
 }
 
 function createQuoteElement(quote, className) {
