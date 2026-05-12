@@ -136,6 +136,8 @@ body {
   font-style: italic;
   font-size: 28px;
   color: #e6eef5;
+  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .quote-author {
