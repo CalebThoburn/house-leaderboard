@@ -178,5 +178,4 @@ function rotateQuotes(container) {
 document.addEventListener("DOMContentLoaded", () => {
   loadLeaderboard();
   initQuotes();
-    console.log("leaderboard data:", data);
 });
