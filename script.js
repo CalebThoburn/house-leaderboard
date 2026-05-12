@@ -116,9 +116,20 @@ function showTaskInfo(entry) {
  *************************************************/
 function initQuotes() {
   const container = document.getElementById("quote");
-  if (!container) return;
 
-  container.innerHTML = renderQuote(quotes[0]);
+  if (!container) {
+    console.error("Quote container not found");
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="quote-item quote-center">
+      <div class="quote-text">“${quotes[0].text}”</div>
+      <div class="quote-author">— ${quotes[0].author}</div>
+    </div>
+  `;
+
+  quoteIndex = 0;
 
   setInterval(rotateQuotes, 12000);
 }
@@ -168,7 +179,7 @@ function rotateQuotes() {
 /*************************************************
  * INITIALIZATION (CRITICAL ORDER)
  *************************************************/
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("load", () => {
   loadLeaderboard();
   initQuotes();
 
