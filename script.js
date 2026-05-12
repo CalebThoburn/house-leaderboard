@@ -45,18 +45,23 @@ function createPlaque(entry, valueKey, rank) {
 
   const displayValue = entry[valueKey] ?? 0;
 
-  li.innerHTML = `
-    <div class="plaque-left">
-      <span class="crown">${crown}</span>
-      <img src="${entry.pfp || ''}" width="40" height="40"
-           style="border-radius:50%;">
-      <strong>${entry.name}</strong>
+li.innerHTML = `
+  <div class="plaque-left">
+    <div class="pfp-wrapper">
+      <img src="${entry.pfp || ''}" />
+
+      ${rank === 1 ? `
+        <div class="crown-overlay"></div>
+      ` : ""}
     </div>
 
-    <div class="plaque-score">
-      ${displayValue}
-    </div>
-  `;
+    <strong>${entry.name}</strong>
+  </div>
+
+  <div class="plaque-score">
+    ${displayValue}
+  </div>
+`;
 
   return li;
 }
