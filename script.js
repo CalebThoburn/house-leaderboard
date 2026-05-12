@@ -178,3 +178,5 @@ function nextQuote() {
 
 // call on load
 document.addEventListener("DOMContentLoaded", initQuotes);
+
+loadLeaderboard();
