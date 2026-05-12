@@ -129,10 +129,6 @@ function initQuotes() {
       <div class="quote-author">— ${quotes[0].author}</div>
     </div>
   `;
-
-  quoteIndex = 0;
-
-  setInterval(rotateQuotes, 12000);
 }
 
 window.addEventListener("load", initQuotes);
@@ -184,8 +180,6 @@ function rotateQuotes() {
  *************************************************/
 document.addEventListener("DOMContentLoaded", () => {
   loadLeaderboard();
-
+  initQuotes();
   document.querySelector(".right")?.classList.add("active");
 });
-
-window.addEventListener("load", initQuotes);
