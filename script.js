@@ -1,11 +1,6 @@
 /*************************************************
  * DATA: QUOTES
  *************************************************/
-const quotes = [
-  { text: "Fortune favors the bold.", author: "Virgil" },
-  { text: "What we think, we become.", author: "Buddha" },
-  { text: "Simplicity is the ultimate sophistication.", author: "Da Vinci" }
-];
 
 let quoteIndex = 0;
 
@@ -41,7 +36,11 @@ async function loadLeaderboard() {
 
 function renderLeaderboard(data) {
   const list = document.getElementById("leaderboard");
-  if (!list) return;
+
+  if (!list) {
+    console.error("Leaderboard element missing");
+    return;
+  }
 
   list.innerHTML = "";
 
@@ -51,7 +50,7 @@ function renderLeaderboard(data) {
       const li = document.createElement("li");
 
       li.innerHTML = `
-        <img src="${entry.pfp}" width="40" height="40"
+        <img src="${entry.pfp || ''}" width="40" height="40"
              style="border-radius:50%; margin-right:10px;">
         <strong>${entry.name}</strong> — ${entry.score}
       `;
@@ -62,7 +61,11 @@ function renderLeaderboard(data) {
 
 function renderTasks(data) {
   const container = document.querySelector(".middle");
-  if (!container) return;
+
+  if (!container) {
+    console.error("Middle panel missing");
+    return;
+  }
 
   let taskContainer = document.getElementById("taskContainer");
 
@@ -181,5 +184,4 @@ function rotateQuotes(container) {
 document.addEventListener("DOMContentLoaded", () => {
   loadLeaderboard();
   initQuotes();
-  document.querySelector(".right")?.classList.add("active");
 });
