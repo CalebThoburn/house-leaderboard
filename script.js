@@ -115,7 +115,7 @@ const quotes = [
 ];
 
 let quoteIndex = 0;
-let quoteInterval = 100;
+let quoteInterval = 10000;
 
 /*************************************************
  * QUOTE SYSTEM (CLEAN + RELIABLE)
