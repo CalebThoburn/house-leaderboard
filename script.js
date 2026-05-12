@@ -117,19 +117,19 @@ const quotes = [
     { text: "Being a little out of tune is like being a little bit pregnant.", author: "Mr. Dr. Esmond" },
     { text: "Never trust a woman, am I right?", author: "Mr. Dr. Esmond" },
     { text: "*Aura farms*", author: "Mr. Dr. Esmond" },
-    { text: "That better not be a white Monster", author: "Mr. Dr. Esmond" },
-    { text: "You're a laaaarge woman", author: "Mr. Dr. Esmond" },
-    { text: "Brahms was a simp", author: "Mr. Dr. Esmond" },
+    { text: "That better not be a white Monster.", author: "Mr. Dr. Esmond" },
+    { text: "You're a laaaarge woman.", author: "Mr. Dr. Esmond" },
+    { text: "Brahms was a simp.", author: "Mr. Dr. Esmond" },
     { text: "Count your carrots. Chew them one by one.", author: "Sambo"},
     { text: "Was your mom an Eskimo or something?", author: "Sambo" },
     { text: "You didn't convince me. The peanut butter cookies convinced me.", author: "Sambo" },
     { text: "If a hairy gerbil who lives in a mountain tells me to do something, I'm gonna do it.", author: "Sambo" },
     { text: "Are y'all from one of them head coverin' churches?", author: "Sambo" },
     { text: "Sam Allen is a black jazz pianist.", author: "Sambo" },
-    { text: "Let me be part of your chocolate milk covenant", author: "Sambo" },
+    { text: "Let me be part of your chocolate milk covenant.", author: "Sambo" },
     { text: "Sometimes you gotta wung it for the nugget.", author: "Sambo" },
     { text: "The only real Latina is Shaquille O'Neil.", author: "Pirate of the Sophomore Class" },
-    { text: "Fly high Krusiewicz", author: "Pirate of the Sophomore Class" },
+    { text: "Fly high Krusiewicz.", author: "Pirate of the Sophomore Class" },
     { text: "Zane needs to learn to log out of his Populi profile.", author: "Pirate of the Sophomore Class" },
     { text: "I would be gay.", author: "Pirate of the Sophomore Class" },
     { text: "I am descended from the great Dingus line.", author: "Pirate of the Sophomore Class" },
@@ -138,7 +138,7 @@ const quotes = [
     { text: "Argh! I am the pirate of the Freshmen class.", author: "Pirate of the Sophomore Class" },
     { text: "Argh! I am the pirate of the Sophomore class.", author: "Pirate of the Sophomore Class" },
     { text: "Why though.", author: "Pirate of the Sophomore Class" },
-    { text: "🗣️🗣️🗣️.", author: "Andrew Serroels" },
+    { text: "🗣️🗣️🗣️", author: "Andrew Serroels" },
     { text: "I have neither won nor lost. I am schrodinger's player.", author: "Andrew Serroels" },
     { text: "*Recommended Headphone Adapter with Charging Port*", author: "Andrew Serroels" },
     { text: "Every day I wake up and go, 'I hope I have leukemia today!!'", author: "Andrew Serroels" },
@@ -170,8 +170,6 @@ const quotes = [
     { text: "Your soul is ... orange.", author: "Emmett Torrey" },
     { text: "Consider, for a moment, gay people.", author: "Emmett Torrey" },
     { text: "You can only go to heaven if you're in ashdown.", author: "Emmett Torrey" },
-    { text: "You can only go to heaven if you're in ashdown.", author: "Emmett Torrey" },
-    
     
 ];
 
@@ -190,7 +188,7 @@ function initQuotes() {
     const current = createQuoteElement(quotes[quoteIndex], "quote-item quote-center");
     container.appendChild(current);
 
-    setInterval(nextQuote, 8000);
+    setInterval(nextQuote, 12000);
 }
 
 function createQuoteElement(quote, className) {
