@@ -18,18 +18,22 @@ body {
   height: 100vh;      /* ensures full height constraint */
 }
 
+/* LEFT */
 .left {
   background: #263445;
-  border-right: 1px solid #2c3b4a;
+  height: 100vh;
 }
 
+/* MIDDLE */
 .middle {
   background: #223041;
-  border-right: 1px solid #2c3b4a;
+  height: 100vh;
 }
 
+/* RIGHT */
 .right {
   background: #1b2530;
+  height: 100vh;
 }
 
 /* Leaderboard styling */
