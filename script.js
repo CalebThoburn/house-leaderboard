@@ -272,23 +272,45 @@ document.addEventListener("DOMContentLoaded", initQuotes);
 loadLeaderboard();
 
 async function getSubs(user) {
-  console.log("Fetching Mr. Beast subscriber count...");
+  console.log("Fetching subscriber count...");
+
+  const apiKey = "AIzaSyDB9tcTpzRXO3Iyv0U31Hdo6Vyjj0lGNJc";
+
+  const channelId = await getChannelId(user);
+
+  if (!channelId) {
+    console.error("No channel found for:", user);
+    return;
+  }
+
+  const url =
+    "https://www.googleapis.com/youtube/v3/channels" +
+    "?part=statistics" +
+    "&id=" + channelId +
+    `&key=${apiKey}`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const subs = data.items?.[0]?.statistics?.subscriberCount;
+
+  console.log(user, "subs:", subs);
+}
+
+async function getChannelId(user) {
   const apiKey = "AIzaSyDB9tcTpzRXO3Iyv0U31Hdo6Vyjj0lGNJc";
 
   const url =
     "https://www.googleapis.com/youtube/v3/search" +
     "?part=snippet" +
-    "&q=@" + user +
+    "&q=" + encodeURIComponent(user) +
     "&type=channel" +
     `&key=${apiKey}`;
 
   const res = await fetch(url);
   const data = await res.json();
 
-  console.log(
-    data.items[0].statistics.subscriberCount
-  );
+  return data.items?.[0]?.id?.channelId;
 }
 
-getSubs("MrBeast");
 getSubs("wazzotv");
