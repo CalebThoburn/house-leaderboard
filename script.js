@@ -74,7 +74,10 @@ function renderTasks(data) {
 }
 
 loadLeaderboard();
-document.querySelector(".right").classList.add("active");
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector(".right")?.classList.add("active");
+});
 
 function selectTask(taskId) {
   const details = document.getElementById("taskDetails");
@@ -123,6 +126,27 @@ function showTaskInfo(entry) {
   }, 200); // must match CSS transition timing roughly
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  initQuotes();
+});
+
+function initQuotes() {
+  const quoteContainer = document.getElementById("quote");
+
+  quoteContainer.innerHTML = `
+    <div class="quote-item quote-center">
+      <div class="quote-text">“${quotes[0].text}”</div>
+      <div class="quote-author">— ${quotes[0].author}</div>
+    </div>
+  `;
+
+  let current = quoteContainer.firstElementChild;
+  let index = 0;
+
+  setInterval(() => rotateQuotes(quoteContainer, current, index), 12000);
+
+
+
 const quotes = [
   { text: "Fortune favors the bold.", author: "Virgil" },
   { text: "What we think, we become.", author: "Buddha" },
@@ -143,6 +167,9 @@ quoteContainer.innerHTML = `
 let current = quoteContainer.firstElementChild;
 
 function rotateQuotes() {
+  const quoteContainer = document.getElementById("quote");
+  if (!quoteContainer) return;
+
   const nextIndex = (index + 1) % quotes.length;
 
   const next = document.createElement("div");
@@ -153,23 +180,25 @@ function rotateQuotes() {
     <div class="quote-author">— ${quotes[nextIndex].author}</div>
   `;
 
-  quoteContainer.appendChild(next);
+  const current = quoteContainer.querySelector(".quote-center");
 
+  quoteContainer.appendChild(next);
   void next.offsetWidth;
 
-  current.classList.remove("quote-center");
-  current.classList.add("quote-left");
+  if (current) {
+    current.classList.remove("quote-center");
+    current.classList.add("quote-left");
+  }
 
   next.classList.add("quote-center");
 
   setTimeout(() => {
-    if (current && current.parentNode) {
-      current.remove();
-    }
-    current = next;
+    if (current) current.remove();
   }, 500);
 
   index = nextIndex;
 }
 
 setInterval(rotateQuotes, 12000);
+
+}
