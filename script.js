@@ -124,36 +124,56 @@ function showTaskInfo(entry) {
 }
 
 const quotes = [
-  {
-    "text": "Lock in.",
-    "author": "Mr. Dr. Esmond"
-  },
-  {
-    "text": "Arrrgh.",
-    "author": "Zane, Pirate of the Sophomore Class"
-  },
+  { text: "Fortune favors the bold.", author: "Virgil" },
+  { text: "What we think, we become.", author: "Buddha" },
+  { text: "Simplicity is the ultimate sophistication.", author: "Da Vinci" }
 ];
 
-let quoteIndex = 0;
+let index = 0;
 
-function rotateQuotes() {
-  const quoteEl = document.getElementById("quote");
+const quoteContainer = document.getElementById("quote");
 
-  quoteEl.style.opacity = 0;
+// create initial quote
+quoteContainer.innerHTML = createQuoteHTML(quotes[0]);
+let current = quoteContainer.firstElementChild;
 
-  setTimeout(() => {
-    const q = quotes[quoteIndex];
-
-    quoteEl.innerHTML = `
+function createQuoteHTML(q) {
+  return `
+    <div class="quote-item quote-center">
       <div class="quote-text">“${q.text}”</div>
       <div class="quote-author">— ${q.author}</div>
-    `;
-
-    quoteIndex = (quoteIndex + 1) % quotes.length;
-
-    quoteEl.style.opacity = 1;
-  }, 300);
+    </div>
+  `;
 }
 
-setInterval(rotateQuotes, 4000);
-rotateQuotes(); // initial load
+function rotateQuotes() {
+  const nextIndex = (index + 1) % quotes.length;
+
+  const next = document.createElement("div");
+  next.className = "quote-item quote-right";
+  next.innerHTML = `
+    <div class="quote-text">“${quotes[nextIndex].text}”</div>
+    <div class="quote-author">— ${quotes[nextIndex].author}</div>
+  `;
+
+  quoteContainer.appendChild(next);
+
+  // force reflow so transition triggers
+  void next.offsetWidth;
+
+  // animate current out left
+  current.className = "quote-item quote-left";
+
+  // animate next into center
+  next.className = "quote-item quote-center";
+
+  // cleanup old element after animation
+  setTimeout(() => {
+    quoteContainer.removeChild(current);
+    current = next;
+  }, 500);
+
+  index = nextIndex;
+}
+
+setInterval(rotateQuotes, 12000);
