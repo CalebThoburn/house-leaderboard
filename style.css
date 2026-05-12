@@ -126,8 +126,20 @@ body {
   font-size: 28px;
   text-align: center;
   color: #e6eef5;
+  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+  font-family: "Times New Roman", Times, serif;
+  text-align: center;
 }
 
-#quote {
-  transition: opacity 0.3s ease;
+.quote-text {
+  font-style: italic;
+  font-size: 28px;
+  color: #e6eef5;
+}
+
+.quote-author {
+  font-size: 16px;
+  margin-top: 6px;
+  color: #a9b6c3;
 }

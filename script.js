@@ -124,11 +124,14 @@ function showTaskInfo(entry) {
 }
 
 const quotes = [
-  "Lock in.",
-  "Arrrgh.",
-  "Power comes from consistency.",
-  "Compete, adapt, overcome.",
-  "Small actions create large outcomes."
+  {
+    "text": "Lock in.",
+    "author": "Mr. Dr. Esmond"
+  },
+  {
+    "text": "Arrrgh.",
+    "author": "Zane, Pirate of the Sophomore Class"
+  },
 ];
 
 let quoteIndex = 0;
@@ -139,10 +142,18 @@ function rotateQuotes() {
   quoteEl.style.opacity = 0;
 
   setTimeout(() => {
+    const q = quotes[quoteIndex];
+
+    quoteEl.innerHTML = `
+      <div class="quote-text">“${q.text}”</div>
+      <div class="quote-author">— ${q.author}</div>
+    `;
+
     quoteIndex = (quoteIndex + 1) % quotes.length;
-    quoteEl.textContent = `"${quotes[quoteIndex]}"`;
+
     quoteEl.style.opacity = 1;
   }, 300);
 }
 
 setInterval(rotateQuotes, 4000);
+rotateQuotes(); // initial load
