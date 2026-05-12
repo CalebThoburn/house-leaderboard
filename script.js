@@ -123,7 +123,7 @@ let isAnimating = false;
 
 function initQuotes() {
     console.log("Initializing quotes rotator");
-    const container = document.getElementById("quote-header");
+    const container = document.getElementById("quote-item quote-center");
 
     if (!container) {
         console.error("Quote container missing");
