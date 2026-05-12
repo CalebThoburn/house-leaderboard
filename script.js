@@ -13,18 +13,18 @@ async function loadLeaderboard() {
 
     const newRows = parsed.data;
     const data = newRows.map(row => {
-      const cols = row.split(",");
+      const cols = row
 
       return {
         name: (cols[0] || "").trim(),
         score: Number((cols[1] || 0).trim()),
         pfp: (cols[2] || "").trim(),
         descrip: (cols[3] || "").trim(),
-        task: (cols[4] || "").trim(),
-        info: (cols[6] || "").trim()
+        task: (cols[13] || "").trim(),
+        info: (cols[15] || "").trim()
       };
     });
-    console.log("Parsed leaderboard data:", data);
+    
     renderLeaderboard(data);
     renderTasks(data);
 
@@ -270,3 +270,22 @@ function nextQuote() {
 document.addEventListener("DOMContentLoaded", initQuotes);
 
 loadLeaderboard();
+
+async function getMrBeastSubs() {
+  const apiKey = "AIzaSyDB9tcTpzRXO3Iyv0U31Hdo6Vyjj0lGNJc";
+
+  const url =
+    "https://www.googleapis.com/youtube/v3/channels" +
+    "?part=statistics" +
+    "&id=UCX6OQ3DkcsbYNE6H8uQQuVA" +
+    `&key=${apiKey}`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  console.log(
+    data.items[0].statistics.subscriberCount
+  );
+}
+
+getMrBeastSubs();
