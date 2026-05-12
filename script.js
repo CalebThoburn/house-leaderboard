@@ -105,16 +105,20 @@ function selectTask(taskId) {
 function showTaskInfo(entry) {
   const details = document.getElementById("taskDetails");
 
-  // reset animation
-  details.classList.remove("show");
+  // STEP 1: fade out current content
+  details.classList.add("hide");
 
-  // force reflow so animation re-triggers
-  void details.offsetWidth;
+  // STEP 2: wait for fade-out, then swap content
+  setTimeout(() => {
+    details.innerHTML = `
+      <h2>${entry.task}</h2>
+      <p>${entry.info || "No additional information available."}</p>
+    `;
 
-  details.innerHTML = `
-    <h2>${entry.task}</h2>
-    <p>${entry.info || "No additional information available."}</p>
-  `;
+    // STEP 3: force reflow so animation restarts cleanly
+    void details.offsetWidth;
 
-  details.classList.add("show");
+    // STEP 4: fade back in
+    details.classList.remove("hide");
+  }, 200); // must match CSS transition timing roughly
 }
