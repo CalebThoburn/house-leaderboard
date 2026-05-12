@@ -111,29 +111,34 @@ function showTaskInfo(entry) {
   }, 200);
 }
 
+const quotes = [
+  { text: "Fortune favors the bold.", author: "Virgil" },
+  { text: "What we think, we become.", author: "Buddha" },
+  { text: "Simplicity is the ultimate sophistication.", author: "Da Vinci" }
+];
+
+let quoteIndex = 0;
+let quoteInterval = null;
+
 /*************************************************
- * QUOTE SYSTEM (ANIMATED CAROUSEL)
+ * QUOTE SYSTEM (CLEAN + RELIABLE)
  *************************************************/
 function initQuotes() {
-    console.log("INIT QUOTES RUNNING");
-    const container = document.getElementById("quote");
+  const container = document.getElementById("quote");
+  if (!container) return;
 
-  if (!container) {
-    console.error("Quote container missing");
-    return;
-  }
+  // render first quote immediately
+  container.innerHTML = createQuoteHTML(quotes[0]);
 
-  container.innerHTML = `
-    <div class="quote-item quote-center">
-      <div class="quote-text">“${quotes[0].text}”</div>
-      <div class="quote-author">— ${quotes[0].author}</div>
-    </div>
-  `;
+  // prevent multiple intervals
+  if (quoteInterval) clearInterval(quoteInterval);
+
+  quoteInterval = setInterval(() => {
+    rotateQuotes(container);
+  }, 8000);
 }
 
-window.addEventListener("load", initQuotes);
-
-function renderQuote(q) {
+function createQuoteHTML(q) {
   return `
     <div class="quote-item quote-center">
       <div class="quote-text">“${q.text}”</div>
@@ -142,17 +147,13 @@ function renderQuote(q) {
   `;
 }
 
-function rotateQuotes() {
-  const container = document.getElementById("quote");
-  if (!container) return;
-
+function rotateQuotes(container) {
   const nextIndex = (quoteIndex + 1) % quotes.length;
 
   const current = container.querySelector(".quote-item");
 
   const next = document.createElement("div");
   next.className = "quote-item quote-right";
-
   next.innerHTML = `
     <div class="quote-text">“${quotes[nextIndex].text}”</div>
     <div class="quote-author">— ${quotes[nextIndex].author}</div>
@@ -160,13 +161,15 @@ function rotateQuotes() {
 
   container.appendChild(next);
 
+  // trigger animation
   requestAnimationFrame(() => {
     if (current) current.classList.add("quote-left");
     next.classList.add("quote-center");
   });
 
+  // cleanup old node
   setTimeout(() => {
-    if (current && current.parentNode) current.remove();
+    if (current) current.remove();
   }, 500);
 
   quoteIndex = nextIndex;
