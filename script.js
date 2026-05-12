@@ -120,3 +120,5 @@ function showTaskInfo(entry) {
     details.classList.remove("hide");
   }, 200);
 }
+
+console.log("RAW PARSED DATA:", parsed.data);
