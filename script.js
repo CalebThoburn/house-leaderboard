@@ -179,9 +179,10 @@ function rotateQuotes() {
 /*************************************************
  * INITIALIZATION (CRITICAL ORDER)
  *************************************************/
-document.addEventListener("load", () => {
+document.addEventListener("DOMContentLoaded", () => {
   loadLeaderboard();
-  initQuotes();
 
   document.querySelector(".right")?.classList.add("active");
 });
+
+window.addEventListener("load", initQuotes);
