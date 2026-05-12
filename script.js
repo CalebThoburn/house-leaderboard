@@ -135,14 +135,15 @@ function createQuoteElement(quote, className) {
   const div = document.createElement("div");
   div.className = className;
 
-  div.innerHTML = `
-    <div>
-      “${quote.text}”
-    </div>
-    <div>
-      — ${quote.author}
-    </div>
-  `;
+div.innerHTML = `
+  <div class="quote-text">
+    “${quote.text}”
+  </div>
+
+  <div class="quote-author">
+    — ${quote.author}
+  </div>
+`;
 
   return div;
 }
