@@ -1,10 +1,4 @@
 /*************************************************
- * DATA: QUOTES
- *************************************************/
-
-let quoteIndex = 0;
-
-/*************************************************
  * LEADERBOARD + TASKS
  *************************************************/
 async function loadLeaderboard() {
@@ -184,6 +178,5 @@ function rotateQuotes(container) {
 document.addEventListener("DOMContentLoaded", () => {
   loadLeaderboard();
   initQuotes();
+    console.log("leaderboard data:", data);
 });
-
-console.log("leaderboard data:", data);
