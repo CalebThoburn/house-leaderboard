@@ -12,10 +12,7 @@ async function loadLeaderboard() {
     
 
     const newRows = parsed.data;
-    console.log("Parsed CSV data:", newRows);
-    const rows = text.trim().split(/\r?\n/).slice(1);
-    console.log("Raw leaderboard data:", rows);
-    const data = rows.map(row => {
+    const data = newRows.map(row => {
       const cols = row.split(",");
 
       return {
