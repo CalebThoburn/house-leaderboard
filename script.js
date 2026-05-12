@@ -211,32 +211,31 @@ function createQuoteElement(quote, className) {
 }
 
 function nextQuote() {
-  if (isAnimating) return;
-  isAnimating = true;
+    if (isAnimating) return;
+        isAnimating = true;
 
-const container = document.getElementById("quote-header");
-  const current = container.querySelector(".quote-item.quote-center");
+    const container = document.getElementById("quote-header");
+    const current = container.querySelector(".quote-item.quote-center");
+    quoteIndex = Math.floor(Math.random() * quotes.length);
+    const next = createQuoteElement(quotes[quoteIndex], "quote-item quote-right");
 
-  Index = (quoteIndex + 1) % quotes.length;
-  const next = createQuoteElement(quotes[quoteIndex], "quote-item quote-right");
+    container.appendChild(next);
 
-  container.appendChild(next);
+    // force reflow so animation triggers reliably
+    void next.offsetWidth;
 
-  // force reflow so animation triggers reliably
-  void next.offsetWidth;
+    // animate transition
+    current.classList.remove("quote-center");
+    current.classList.add("quote-left");
 
-  // animate transition
-  current.classList.remove("quote-center");
-  current.classList.add("quote-left");
+    next.classList.remove("quote-right");
+    next.classList.add("quote-center");
 
-  next.classList.remove("quote-right");
-  next.classList.add("quote-center");
-
-  // cleanup old quote
-  setTimeout(() => {
-    current.remove();
-    isAnimating = false;
-  }, 500);
+    // cleanup old quote
+    setTimeout(() => {
+        current.remove();
+        isAnimating = false;
+    }, 500);
 }
 
 // call on load
