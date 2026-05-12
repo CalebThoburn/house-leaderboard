@@ -123,6 +123,7 @@ let isAnimating = false;
 
 function initQuotes() {
     console.log("Initializing quotes rotator");
+    const container = document.getElementById("quote");
 
     const current = createQuoteElement(quotes[quoteIndex], "quote-item quote-center");
     container.appendChild(current);
@@ -137,12 +138,9 @@ function createQuoteElement(quote, className) {
     console.log(quote);
     div.innerHTML = `
         <header class="quote-header">
-            <div class="quote-text">
-                “${quote.text}”
-            </div>
-
-            <div class="quote-author">
-                — ${quote.author}
+            <div class="quote-item quote-center">
+                <div class="quote-text">“${quote.text}”</div>
+                <div class="quote-author">— ${quote.author}</div>
             </div>
         </header>
     `;
