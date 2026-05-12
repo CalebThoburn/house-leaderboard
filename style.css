@@ -1,9 +1,10 @@
 body {
   margin: 0;
   height: 100vh;
-  overflow: hidden; /* stops whole page scrolling */
+  overflow: hidden;
   font-family: Arial, sans-serif;
   background: #1f2a36;
+  color: #e6eef5; /* fixes black text */
 }
 
 .container {
@@ -14,26 +15,23 @@ body {
 
 .panel {
   padding: 20px;
-  overflow-y: auto;   /* enables vertical scroll inside each panel */
-  height: 100vh;      /* ensures full height constraint */
+  overflow-y: auto; /* scrolling works here */
+  min-height: 0;     /* IMPORTANT: allows grid children to scroll */
 }
 
 /* LEFT */
 .left {
   background: #263445;
-  height: 100vh;
 }
 
 /* MIDDLE */
 .middle {
   background: #223041;
-  height: 100vh;
 }
 
 /* RIGHT */
 .right {
   background: #1b2530;
-  height: 100vh;
 }
 
 /* Leaderboard styling */
