@@ -119,57 +119,62 @@ const quotes = [
 ];
 
 let quoteIndex = 0;
-let animating = false;
-
-document.addEventListener("DOMContentLoaded", initQuotes);
+let isAnimating = false;
 
 function initQuotes() {
   const container = document.getElementById("quote");
   if (!container) return;
 
-  container.innerHTML = "";
-
-  // initial quote
-  container.appendChild(createQuote(quotes[quoteIndex], "quote-item quote-center"));
+  const current = createQuoteElement(quotes[quoteIndex], "quote-item quote-center");
+  container.appendChild(current);
 
   setInterval(nextQuote, 8000);
 }
 
-function createQuote(q, className) {
-  const el = document.createElement("div");
-  el.className = className;
+function createQuoteElement(quote, className) {
+  const div = document.createElement("div");
+  div.className = className;
 
-  el.innerHTML = `
-    <div style="font-size:18px">“${q.text}”</div>
-    <div style="font-size:14px; opacity:0.7">— ${q.author}</div>
+  div.innerHTML = `
+    <div style="font-size: 18px;">
+      “${quote.text}”
+    </div>
+    <div style="font-size: 14px; opacity: 0.7; margin-top: 4px;">
+      — ${quote.author}
+    </div>
   `;
 
-  return el;
+  return div;
 }
 
 function nextQuote() {
-  if (animating) return;
-  animating = true;
+  if (isAnimating) return;
+  isAnimating = true;
 
   const container = document.getElementById("quote");
   const current = container.querySelector(".quote-item");
 
   quoteIndex = (quoteIndex + 1) % quotes.length;
-  const next = createQuote(quotes[quoteIndex], "quote-item quote-right");
+  const next = createQuoteElement(quotes[quoteIndex], "quote-item quote-right");
 
   container.appendChild(next);
 
-  // force layout
+  // force reflow so animation triggers reliably
   void next.offsetWidth;
 
+  // animate transition
   current.classList.remove("quote-center");
   current.classList.add("quote-left");
 
   next.classList.remove("quote-right");
   next.classList.add("quote-center");
 
+  // cleanup old quote
   setTimeout(() => {
-    if (current) current.remove();
-    animating = false;
+    current.remove();
+    isAnimating = false;
   }, 500);
 }
+
+// call on load
+document.addEventListener("DOMContentLoaded", initQuotes);
