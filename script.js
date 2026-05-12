@@ -177,3 +177,4 @@ function rotateQuotes() {
 }
 
 setInterval(rotateQuotes, 12000);
+initializeQuotes();
