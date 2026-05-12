@@ -115,7 +115,7 @@ const quotes = [
 ];
 
 let quoteIndex = 0;
-let quoteInterval = 10000;
+let quoteInterval = null;
 
 /*************************************************
  * QUOTE SYSTEM (CLEAN + RELIABLE)
@@ -124,10 +124,10 @@ function initQuotes() {
   const container = document.getElementById("quote");
   if (!container) return;
 
-  // render first quote immediately
   container.innerHTML = createQuoteHTML(quotes[0]);
 
-  // prevent multiple intervals
+  quoteIndex = 0;
+
   if (quoteInterval) clearInterval(quoteInterval);
 
   quoteInterval = setInterval(() => {
