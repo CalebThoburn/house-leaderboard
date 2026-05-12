@@ -272,6 +272,7 @@ document.addEventListener("DOMContentLoaded", initQuotes);
 loadLeaderboard();
 
 async function getMrBeastSubs() {
+  console.log("Fetching Mr. Beast subscriber count...");
   const apiKey = "AIzaSyDB9tcTpzRXO3Iyv0U31Hdo6Vyjj0lGNJc";
 
   const url =
