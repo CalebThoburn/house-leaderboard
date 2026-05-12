@@ -119,64 +119,57 @@ const quotes = [
 ];
 
 let quoteIndex = 0;
-let isAnimating = false;
+let animating = false;
+
+document.addEventListener("DOMContentLoaded", initQuotes);
 
 function initQuotes() {
   const container = document.getElementById("quote");
   if (!container) return;
 
-  container.innerHTML = ""; // important safety reset
+  container.innerHTML = "";
 
-  const current = createQuoteElement(quotes[quoteIndex], "quote-item quote-center");
-  container.appendChild(current);
+  // initial quote
+  container.appendChild(createQuote(quotes[quoteIndex], "quote-item quote-center"));
 
   setInterval(nextQuote, 8000);
 }
 
-function createQuoteElement(quote, className) {
-  const div = document.createElement("div");
-  div.className = className;
+function createQuote(q, className) {
+  const el = document.createElement("div");
+  el.className = className;
 
-  div.innerHTML = `
-    <div style="font-size: 18px;">
-      “${quote.text}”
-    </div>
-    <div style="font-size: 14px; opacity: 0.7; margin-top: 4px;">
-      — ${quote.author}
-    </div>
+  el.innerHTML = `
+    <div style="font-size:18px">“${q.text}”</div>
+    <div style="font-size:14px; opacity:0.7">— ${q.author}</div>
   `;
 
-  return div;
+  return el;
 }
 
 function nextQuote() {
-  if (isAnimating) return;
-  isAnimating = true;
+  if (animating) return;
+  animating = true;
 
   const container = document.getElementById("quote");
   const current = container.querySelector(".quote-item");
 
   quoteIndex = (quoteIndex + 1) % quotes.length;
-  const next = createQuoteElement(quotes[quoteIndex], "quote-item quote-right");
+  const next = createQuote(quotes[quoteIndex], "quote-item quote-right");
 
   container.appendChild(next);
 
-  // force reflow so animation triggers reliably
+  // force layout
   void next.offsetWidth;
 
-  // animate transition
   current.classList.remove("quote-center");
   current.classList.add("quote-left");
 
   next.classList.remove("quote-right");
   next.classList.add("quote-center");
 
-  // cleanup old quote
   setTimeout(() => {
-    current.remove();
-    isAnimating = false;
+    if (current) current.remove();
+    animating = false;
   }, 500);
 }
-
-// call on load
-document.addEventListener("DOMContentLoaded", initQuotes);
