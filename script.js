@@ -1,7 +1,7 @@
 async function loadLeaderboard() {
   const res = await fetch("https://docs.google.com/spreadsheets/d/1ZUhDZwYB5N0KDUlnwKMnSE8qvnLgFvQG16m-ci1SUGE/export?format=csv");
   const text = await res.text();
-
+  console.log(text);
   const rows = text.trim().split(/\r?\n/).slice(1);
 
   const data = rows.map(row => {
