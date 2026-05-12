@@ -136,10 +136,10 @@ function createQuoteElement(quote, className) {
   div.className = className;
 
   div.innerHTML = `
-    <div style="font-size: 18px;">
+    <div>
       “${quote.text}”
     </div>
-    <div style="font-size: 14px; opacity: 0.7; margin-top: 4px;">
+    <div>
       — ${quote.author}
     </div>
   `;
