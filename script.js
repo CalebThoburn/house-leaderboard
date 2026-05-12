@@ -13,6 +13,9 @@ async function loadLeaderboard() {
     const parsed = Papa.parse(text, {
       skipEmptyLines: true
     });
+    
+    console.log("RAW PARSED DATA:", parsed.data);
+    console.log("FIRST ROW:", parsed.data[1]);
 
     const rows = parsed.data.slice(1); // remove header row
 
@@ -121,4 +124,3 @@ function showTaskInfo(entry) {
   }, 200);
 }
 
-console.log("RAW PARSED DATA:", parsed.data);
