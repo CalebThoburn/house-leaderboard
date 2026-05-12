@@ -115,10 +115,11 @@ function showTaskInfo(entry) {
  * QUOTE SYSTEM (ANIMATED CAROUSEL)
  *************************************************/
 function initQuotes() {
-  const container = document.getElementById("quote");
+    console.log("INIT QUOTES RUNNING");
+    const container = document.getElementById("quote");
 
   if (!container) {
-    console.error("Quote container not found");
+    console.error("Quote container missing");
     return;
   }
 
@@ -133,6 +134,8 @@ function initQuotes() {
 
   setInterval(rotateQuotes, 12000);
 }
+
+window.addEventListener("load", initQuotes);
 
 function renderQuote(q) {
   return `
