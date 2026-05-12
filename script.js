@@ -15,6 +15,7 @@ async function loadLeaderboard() {
         name: (cols[0] || "").trim(),
         score: Number((cols[1] || 0).trim()),
         pfp: (cols[2] || "").trim(),
+        descrip: (cols[3] || "").trim(),
         task: (cols[4] || "").trim(),
         info: (cols[6] || "").trim()
       };
@@ -49,8 +50,37 @@ function renderLeaderboard(data) {
         <strong>${entry.name}</strong> — ${entry.score}
       `;
 
+      li.style.cursor = "pointer";
+
+      li.onclick = () => showLeaderboardInfo(entry);
       list.appendChild(li);
     });
+}
+
+function showLeaderboardInfo(entry) {
+  const details = document.getElementById("taskDetails");
+  if (!details) return;
+
+  details.classList.add("hide");
+
+  setTimeout(() => {
+    details.innerHTML = `
+      <div style="text-align:center;">
+        <img src="${entry.pfp || ''}" 
+             width="80" height="80"
+             style="border-radius:50%; margin-bottom:10px;">
+        
+        <h2>${entry.name}</h2>
+      </div>
+
+      <p style="margin-top:10px;">
+        ${entry.descrip || "No description available."}
+      </p>
+    `;
+
+    void details.offsetWidth;
+    details.classList.remove("hide");
+  }, 200);
 }
 
 function renderTasks(data) {
