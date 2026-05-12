@@ -1,27 +1,48 @@
+/*************************************************
+ * DATA: QUOTES
+ *************************************************/
+const quotes = [
+  { text: "Fortune favors the bold.", author: "Virgil" },
+  { text: "What we think, we become.", author: "Buddha" },
+  { text: "Simplicity is the ultimate sophistication.", author: "Da Vinci" }
+];
+
+let quoteIndex = 0;
+
+/*************************************************
+ * LEADERBOARD + TASKS
+ *************************************************/
 async function loadLeaderboard() {
-  const res = await fetch("https://docs.google.com/spreadsheets/d/1ZUhDZwYB5N0KDUlnwKMnSE8qvnLgFvQG16m-ci1SUGE/export?format=csv");
-  const text = await res.text();
+  try {
+    const res = await fetch("https://docs.google.com/spreadsheets/d/1ZUhDZwYB5N0KDUlnwKMnSE8qvnLgFvQG16m-ci1SUGE/export?format=csv");
+    const text = await res.text();
 
-  const rows = text.trim().split(/\r?\n/).slice(1);
+    const rows = text.trim().split(/\r?\n/).slice(1);
 
-  const data = rows.map(row => {
-    const cols = row.split(",");
+    const data = rows.map(row => {
+      const cols = row.split(",");
 
-    return {
-    name: (cols[0] || "").trim(),
-    score: Number((cols[1] || 0).trim()),
-    pfp: (cols[2] || "").trim(),
-    task: (cols[4] || "").trim(),   // column E (5th)
-    info: (cols[6] || "").trim()    // column G (7th)
-    };
-  });
+      return {
+        name: (cols[0] || "").trim(),
+        score: Number((cols[1] || 0).trim()),
+        pfp: (cols[2] || "").trim(),
+        task: (cols[4] || "").trim(),
+        info: (cols[6] || "").trim()
+      };
+    });
 
-  renderLeaderboard(data);
-  renderTasks(data);
+    renderLeaderboard(data);
+    renderTasks(data);
+
+  } catch (err) {
+    console.error("Failed to load leaderboard:", err);
+  }
 }
 
 function renderLeaderboard(data) {
   const list = document.getElementById("leaderboard");
+  if (!list) return;
+
   list.innerHTML = "";
 
   data
@@ -41,136 +62,83 @@ function renderLeaderboard(data) {
 
 function renderTasks(data) {
   const container = document.querySelector(".middle");
-  const taskBox = document.getElementById("taskContainer");
+  if (!container) return;
 
-  // create container if not in HTML yet
-  if (!taskBox) {
-    const div = document.createElement("div");
-    div.id = "taskContainer";
-    container.appendChild(div);
+  let taskContainer = document.getElementById("taskContainer");
+
+  if (!taskContainer) {
+    taskContainer = document.createElement("div");
+    taskContainer.id = "taskContainer";
+    container.appendChild(taskContainer);
   }
 
-  const taskContainer = document.getElementById("taskContainer");
   taskContainer.innerHTML = "";
 
-  data.forEach((entry, index) => {
+  data.forEach(entry => {
     if (!entry.task) return;
 
     const plaque = document.createElement("div");
-
     plaque.className = "task-plaque";
-    plaque.onclick = () => selectTask(entry);
 
     plaque.innerHTML = `
       <div class="task-title">${entry.task}</div>
     `;
 
-    taskContainer.appendChild(plaque);
-
     plaque.onclick = () => showTaskInfo(entry);
 
-
+    taskContainer.appendChild(plaque);
   });
 }
 
-loadLeaderboard();
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelector(".right")?.classList.add("active");
-});
-
-function selectTask(taskId) {
-  const details = document.getElementById("taskDetails");
-
-  const taskData = {
-    task1: {
-      title: "Task 1",
-      desc: "This is the first task. Do something interesting here."
-    },
-    task2: {
-      title: "Task 2",
-      desc: "This task involves collecting points."
-    },
-    task3: {
-      title: "Task 3",
-      desc: "Final challenge task."
-    }
-  };
-
-  const task = taskData[taskId];
-
-  details.innerHTML = `
-    <h3>${task.title}</h3>
-    <p>${task.desc}</p>
-  `;
-}
-
+/*************************************************
+ * TASK DETAIL VIEW
+ *************************************************/
 function showTaskInfo(entry) {
   const details = document.getElementById("taskDetails");
+  if (!details) return;
 
-  // STEP 1: fade out current content
   details.classList.add("hide");
 
-  // STEP 2: wait for fade-out, then swap content
   setTimeout(() => {
     details.innerHTML = `
       <h2>${entry.task}</h2>
       <p>${entry.info || "No additional information available."}</p>
     `;
 
-    // STEP 3: force reflow so animation restarts cleanly
     void details.offsetWidth;
 
-    // STEP 4: fade back in
     details.classList.remove("hide");
-  }, 200); // must match CSS transition timing roughly
+  }, 200);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  initQuotes();
-});
-
+/*************************************************
+ * QUOTE SYSTEM (ANIMATED CAROUSEL)
+ *************************************************/
 function initQuotes() {
-  const quoteContainer = document.getElementById("quote");
+  const container = document.getElementById("quote");
+  if (!container) return;
 
-  quoteContainer.innerHTML = `
+  container.innerHTML = renderQuote(quotes[0]);
+
+  setInterval(rotateQuotes, 12000);
+}
+
+function renderQuote(q) {
+  return `
     <div class="quote-item quote-center">
-      <div class="quote-text">“${quotes[0].text}”</div>
-      <div class="quote-author">— ${quotes[0].author}</div>
+      <div class="quote-text">“${q.text}”</div>
+      <div class="quote-author">— ${q.author}</div>
     </div>
   `;
-
-  let current = quoteContainer.firstElementChild;
-  let index = 0;
-
-  setInterval(() => rotateQuotes(quoteContainer, current, index), 12000);
-
-
-
-const quotes = [
-  { text: "Fortune favors the bold.", author: "Virgil" },
-  { text: "What we think, we become.", author: "Buddha" },
-  { text: "Simplicity is the ultimate sophistication.", author: "Da Vinci" }
-];
-
-let index = 0;
-const quoteContainer = document.getElementById("quote");
-
-// INITIAL RENDER (THIS WAS MISSING)
-quoteContainer.innerHTML = `
-  <div class="quote-item quote-center">
-    <div class="quote-text">“${quotes[0].text}”</div>
-    <div class="quote-author">— ${quotes[0].author}</div>
-  </div>
-`;
-
-let current = quoteContainer.firstElementChild;
+}
 
 function rotateQuotes() {
-  const quoteContainer = document.getElementById("quote");
-  if (!quoteContainer) return;
+  const container = document.getElementById("quote");
+  if (!container) return;
 
-  const nextIndex = (index + 1) % quotes.length;
+  const nextIndex = (quoteIndex + 1) % quotes.length;
+
+  const current = container.querySelector(".quote-item");
 
   const next = document.createElement("div");
   next.className = "quote-item quote-right";
@@ -180,13 +148,11 @@ function rotateQuotes() {
     <div class="quote-author">— ${quotes[nextIndex].author}</div>
   `;
 
-  const current = quoteContainer.querySelector(".quote-center");
+  container.appendChild(next);
 
-  quoteContainer.appendChild(next);
   void next.offsetWidth;
 
   if (current) {
-    current.classList.remove("quote-center");
     current.classList.add("quote-left");
   }
 
@@ -196,9 +162,15 @@ function rotateQuotes() {
     if (current) current.remove();
   }, 500);
 
-  index = nextIndex;
+  quoteIndex = nextIndex;
 }
 
-setInterval(rotateQuotes, 12000);
+/*************************************************
+ * INITIALIZATION (CRITICAL ORDER)
+ *************************************************/
+document.addEventListener("DOMContentLoaded", () => {
+  loadLeaderboard();
+  initQuotes();
 
-}
+  document.querySelector(".right")?.classList.add("active");
+});
