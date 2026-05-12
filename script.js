@@ -108,81 +108,73 @@ function showTaskInfo(entry) {
   }, 200);
 }
 
+/*************************************************
+ * QUOTES ROTATOR
+ *************************************************/
 const quotes = [
   { text: "Fortune favors the bold.", author: "Virgil" },
   { text: "What we think, we become.", author: "Buddha" },
-  { text: "Simplicity is the ultimate sophistication.", author: "Da Vinci" }
+  { text: "Simplicity is the ultimate sophistication.", author: "Da Vinci" },
+  { text: "The only limit to our realization of tomorrow is our doubts of today.", author: "F. D. Roosevelt" }
 ];
 
 let quoteIndex = 0;
-let quoteInterval = null;
+let isAnimating = false;
 
-/*************************************************
- * QUOTE SYSTEM (CLEAN + RELIABLE)
- *************************************************/
 function initQuotes() {
   const container = document.getElementById("quote");
   if (!container) return;
 
-  container.innerHTML = createQuoteHTML(quotes[0]);
+  const current = createQuoteElement(quotes[quoteIndex], "quote-item quote-center");
+  container.appendChild(current);
 
-  quoteIndex = 0;
-
-  if (quoteInterval) clearInterval(quoteInterval);
-
-  quoteInterval = setInterval(() => {
-    rotateQuotes(container);
-  }, 8000);
+  setInterval(nextQuote, 8000);
 }
 
-function createQuoteHTML(q) {
-  return `
-    <div class="quote-item quote-center">
-      <div class="quote-text">“${q.text}”</div>
-      <div class="quote-author">— ${q.author}</div>
+function createQuoteElement(quote, className) {
+  const div = document.createElement("div");
+  div.className = className;
+
+  div.innerHTML = `
+    <div style="font-size: 18px;">
+      “${quote.text}”
+    </div>
+    <div style="font-size: 14px; opacity: 0.7; margin-top: 4px;">
+      — ${quote.author}
     </div>
   `;
+
+  return div;
 }
 
-function rotateQuotes(container) {
-  const nextIndex = (quoteIndex + 1) % quotes.length;
+function nextQuote() {
+  if (isAnimating) return;
+  isAnimating = true;
 
+  const container = document.getElementById("quote");
   const current = container.querySelector(".quote-item");
 
-  const next = document.createElement("div");
-  next.className = "quote-item quote-right";
-
-  next.innerHTML = `
-    <div class="quote-text">“${quotes[nextIndex].text}”</div>
-    <div class="quote-author">— ${quotes[nextIndex].author}</div>
-  `;
+  quoteIndex = (quoteIndex + 1) % quotes.length;
+  const next = createQuoteElement(quotes[quoteIndex], "quote-item quote-right");
 
   container.appendChild(next);
 
-  // force reflow to ensure animation starts
-  next.getBoundingClientRect();
+  // force reflow so animation triggers reliably
+  void next.offsetWidth;
 
-  // reset classes safely
-  if (current) {
-    current.className = "quote-item quote-left";
-  }
+  // animate transition
+  current.classList.remove("quote-center");
+  current.classList.add("quote-left");
 
-  next.className = "quote-item quote-center";
+  next.classList.remove("quote-right");
+  next.classList.add("quote-center");
 
-  // cleanup after animation
+  // cleanup old quote
   setTimeout(() => {
-    if (current && current.parentNode) {
-      current.remove();
-    }
-  }, 600);
-
-  quoteIndex = nextIndex;
+    current.remove();
+    isAnimating = false;
+  }, 500);
 }
 
-/*************************************************
- * INITIALIZATION (CRITICAL ORDER)
- *************************************************/
-document.addEventListener("DOMContentLoaded", () => {
-  loadLeaderboard();
-  initQuotes();
-});
+// call on load
+document.addEventListener("DOMContentLoaded", initQuotes);
