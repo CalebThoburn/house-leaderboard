@@ -177,8 +177,7 @@ let quoteIndex = 0;
 let isAnimating = false;
 
 function initQuotes() {
-    console.log("Initializing quotes rotator");
-    const container = document.getElementById("quote-header");
+   const container = document.getElementById("quote-container");
 
     if (!container) {
         console.error("Quote container missing");
@@ -192,27 +191,22 @@ function initQuotes() {
 }
 
 function createQuoteElement(quote, className) {
-    console.log("Creating quote element");
     const div = document.createElement("div");
     div.className = className;
-    console.log(quote);
+
     div.innerHTML = `
-        <header class="quote-header">
-            <div class="quote-item quote-center">
-                <div class="quote-text">“${quote.text}”</div>
-                <div class="quote-author">— ${quote.author}</div>
-            </div>
-        </header>
+        <div class="quote-text">“${quote.text}”</div>
+        <div class="quote-author">— ${quote.author}</div>
     `;
 
-  return div;
+    return div;
 }
 
 function nextQuote() {
     if (isAnimating) return;
         isAnimating = true;
 
-    const container = document.getElementById("quote-header");
+    const container = document.getElementById("quote-container");
     const current = container.querySelector(".quote-item.quote-center");
     quoteIndex = Math.floor(Math.random() * quotes.length);
     const next = createQuoteElement(quotes[quoteIndex], "quote-item quote-right");
