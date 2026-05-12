@@ -122,6 +122,7 @@ let quoteIndex = 0;
 let isAnimating = false;
 
 function initQuotes() {
+    console.log("Initializing quotes rotator");
     const container = document.getElementById("quote");
     if (!container) return;
 
@@ -132,7 +133,7 @@ function initQuotes() {
 }
 
 function createQuoteElement(quote, className) {
-    console.log("Creating quote element:", quote);
+    console.log("Creating quote element");
     const div = document.createElement("div");
     div.className = className;
     console.log(quote);
