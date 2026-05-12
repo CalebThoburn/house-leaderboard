@@ -82,33 +82,18 @@ body {
 }
 
 .rank-1 {
-  padding: 18px 12px;  /* taller */
-  background: #d4af37;           /* gold */
-  border: 2px solid #8a6d1f;     /* darker gold outline */
-}
-
-.rank-1 img {
-  width: 54px;
-  height: 54px;
-}
-
-.rank-1 strong {
-  font-size: 1.1rem;
+  background: #243240; /* same as normal plaque */
+  border: 2px solid #d4af37; /* gold */
 }
 
 .rank-2 {
-  background: #aeb6c1;           /* silver */
-  border: 2px solid #6f7783;
+  background: #243240;
+  border: 2px solid #aeb6c1; /* silver */
 }
 
 .rank-3 {
-  background: #b87333;           /* bronze */
-  border: 2px solid #7a4a1f;
-}
-
-.crown {
-  font-size: 14px;
-  margin-right: 6px;
+  background: #243240;
+  border: 2px solid #b87333; /* bronze */
 }
 
 #taskContainer {
