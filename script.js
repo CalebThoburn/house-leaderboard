@@ -128,22 +128,72 @@ function renderTasks(data) {
 /*************************************************
  * TASK DETAIL VIEW
  *************************************************/
-function showTaskInfo(entry) {
+async function showTaskInfo(entry) {
   const details = document.getElementById("taskDetails");
   if (!details) return;
 
   details.classList.add("hide");
 
-  setTimeout(() => {
+  setTimeout(async () => {
+
+    let leaderboardHTML = "";
+
+    // ONLY inject leaderboard if leadLogicIndex == 1
+    if (Number(entry.leadLogicIndex) === 1) {
+      leaderboardHTML = await buildTopSubsLeaderboard();
+    }
+
     details.innerHTML = `
       <h2>${entry.task}</h2>
+
+      ${leaderboardHTML}
+
       <p>${entry.info || "No additional information available."}</p>
     `;
 
     void details.offsetWidth;
-
     details.classList.remove("hide");
+
   }, 200);
+}
+
+async function buildTopSubsLeaderboard() {
+  const res = await fetch("https://docs.google.com/spreadsheets/d/1ZUhDZwYB5N0KDUlnwKMnSE8qvnLgFvQG16m-ci1SUGE/export?format=csv");
+  const text = await res.text();
+
+  const parsed = Papa.parse(text, { skipEmptyLines: true });
+  const rows = parsed.data.slice(1);
+
+  const users = rows.map(r => ({
+    name: r[0],
+    pfp: r[2],
+    ytChannel: r[4]
+  }));
+
+  // get subs for all users
+  const withSubs = await Promise.all(
+    users.map(async u => {
+      const subs = await getSubs(u.ytChannel);
+      return { ...u, subs: Number(subs || 0) };
+    })
+  );
+
+  const top3 = withSubs
+    .sort((a, b) => b.subs - a.subs)
+    .slice(0, 3);
+
+  return `
+    <div class="mini-leaderboard">
+      <h3>Top Subscribers</h3>
+      ${top3.map(u => `
+        <div class="mini-user">
+          <img src="${u.pfp}" width="30" height="30" style="border-radius:50%;">
+          <span>${u.name}</span>
+          <span>${u.subs.toLocaleString()}</span>
+        </div>
+      `).join("")}
+    </div>
+  `;
 }
 
 /*************************************************
@@ -274,16 +324,10 @@ document.addEventListener("DOMContentLoaded", initQuotes);
 loadLeaderboard();
 
 async function getSubs(user) {
-  console.log("Fetching subscriber count...");
-
-  const apiKey = "AIzaSyDB9tcTpzRXO3Iyv0U31Hdo6Vyjj0lGNJc";
+  const apiKey = "YOUR_KEY";
 
   const channelId = await getChannelId(user);
-
-  if (!channelId) {
-    console.error("No channel found for:", user);
-    return;
-  }
+  if (!channelId) return 0;
 
   const url =
     "https://www.googleapis.com/youtube/v3/channels" +
@@ -294,9 +338,7 @@ async function getSubs(user) {
   const res = await fetch(url);
   const data = await res.json();
 
-  const subs = data.items?.[0]?.statistics?.subscriberCount;
-
-  console.log(user, "subs:", subs);
+  return data.items?.[0]?.statistics?.subscriberCount || 0;
 }
 
 async function getChannelId(user) {
