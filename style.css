@@ -143,7 +143,7 @@ body {
 .quote-item {
   position: absolute;
   width: 100%;
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  transition: transform 1.5s ease, opacity 1.5s ease;
 }
 
 .quote-center {
