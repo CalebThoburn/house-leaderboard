@@ -115,7 +115,7 @@ const quotes = [
 ];
 
 let quoteIndex = 0;
-let quoteInterval = null;
+let quoteInterval = 100;
 
 /*************************************************
  * QUOTE SYSTEM (CLEAN + RELIABLE)
@@ -151,6 +151,7 @@ function rotateQuotes(container) {
 
   const next = document.createElement("div");
   next.className = "quote-item quote-right";
+
   next.innerHTML = `
     <div class="quote-text">“${quotes[nextIndex].text}”</div>
     <div class="quote-author">— ${quotes[nextIndex].author}</div>
@@ -158,16 +159,22 @@ function rotateQuotes(container) {
 
   container.appendChild(next);
 
-  // trigger animation
-  requestAnimationFrame(() => {
-    if (current) current.classList.add("quote-left");
-    next.classList.add("quote-center");
-  });
+  // force reflow to ensure animation starts
+  next.getBoundingClientRect();
 
-  // cleanup old node
+  // reset classes safely
+  if (current) {
+    current.className = "quote-item quote-left";
+  }
+
+  next.className = "quote-item quote-center";
+
+  // cleanup after animation
   setTimeout(() => {
-    if (current) current.remove();
-  }, 500);
+    if (current && current.parentNode) {
+      current.remove();
+    }
+  }, 600);
 
   quoteIndex = nextIndex;
 }
