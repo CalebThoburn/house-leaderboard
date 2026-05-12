@@ -121,40 +121,25 @@ body {
 }
 
 #quote {
-  position: relative;
-  height: 80px; /* prevents layout jump */
-  overflow: hidden;
   font-family: "Times New Roman", Times, serif;
-}
-
-/* shared quote block */
-.quote-item {
-  position: absolute;
-  width: 100%;
-  top: 0;
-  left: 0;
-
+  font-style: italic;
+  font-size: 28px;
   text-align: center;
-
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-              opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform, opacity;
+  color: #e6eef5;
+  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+  font-family: "Times New Roman", Times, serif;
+  text-align: center;
 }
 
-/* visible (center) */
-.quote-center {
-  transform: translateX(0);
-  opacity: 1;
+.quote-text {
+  font-style: italic;
+  font-size: 28px;
+  color: #e6eef5;
 }
 
-/* exiting left */
-.quote-left {
-  transform: translateX(-60px);
-  opacity: 0;
-}
-
-/* entering from right */
-.quote-right {
-  transform: translateX(60px);
-  opacity: 0;
+.quote-author {
+  font-size: 16px;
+  margin-top: 6px;
+  color: #a9b6c3;
 }
