@@ -128,6 +128,11 @@ body {
   color: #e6eef5;
   transition: opacity 0.3s ease;
   opacity: 1;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 120px;
+
 }
 
 .quote-text {
@@ -140,7 +145,7 @@ body {
   font-size: 16px;
   margin-top: 6px;
   color: #a9b6c3;
-  
+
 }.quote-item {
   position: absolute;
   width: 100%;
