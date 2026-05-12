@@ -1,55 +1,45 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #1f2a36; /* dark blue-grey */
-  color: #195386;
+  background: #1f2a36;
+  color: #e6eef5;
+  height: 100vh;
 }
 
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr; /* THIS is what makes tri-fold work */
   height: 100vh;
 }
 
 .panel {
   padding: 20px;
   overflow-y: auto;
-  border-right: 1px solid #2c3b4a;
 }
 
+/* LEFT */
 .left {
   background: #263445;
 }
 
+/* MIDDLE */
 .middle {
   background: #223041;
 }
 
+/* RIGHT */
 .right {
-  background: #1f2a36;
+  background: #1b2530;
 }
 
 /* Leaderboard styling */
 #leaderboard li {
   list-style: none;
-  padding: 8px;
-  margin: 5px 0;
+  padding: 10px;
+  margin: 6px 0;
   background: #2e3f52;
   border-radius: 8px;
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-/* Tasks */
-.task {
-  padding: 10px;
-  margin: 8px 0;
-  background: #2e3f52;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.task:hover {
-  background: #3a5168;
 }
