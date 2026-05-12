@@ -9,9 +9,11 @@ async function loadLeaderboard() {
     const parsed = Papa.parse(text, {
       skipEmptyLines: true
     });
-    console.log("Fetched leaderboard CSV:", parsed);
+    
 
-    const rows = parsed.data;
+    const newRows = parsed.data;
+  
+    const rows = text.trim().split(/\r?\n/).slice(1);
     console.log("Raw leaderboard data:", rows);
     const data = rows.map(row => {
       const cols = row.split(",");
