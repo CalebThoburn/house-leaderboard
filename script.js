@@ -12,7 +12,8 @@ async function loadLeaderboard() {
     
 
     const newRows = parsed.data;
-    const data = newRows.map(row => {
+    const rowsWOHeader = newRows.slice(1);
+    const data = rowsWOHeader.map(row => {
       const cols = row
 
       return {
@@ -34,7 +35,6 @@ async function loadLeaderboard() {
 }
 
 function renderLeaderboard(data) {
-  console.log("Rendering leaderboard with data:", data);
   const list = document.getElementById("leaderboard");
 
   if (!list) {
