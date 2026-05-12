@@ -74,6 +74,7 @@ function renderTasks(data) {
 }
 
 loadLeaderboard();
+document.querySelector(".right").classList.add("active");
 
 function selectTask(taskId) {
   const details = document.getElementById("taskDetails");
@@ -104,8 +105,16 @@ function selectTask(taskId) {
 function showTaskInfo(entry) {
   const details = document.getElementById("taskDetails");
 
+  // reset animation
+  details.classList.remove("show");
+
+  // force reflow so animation re-triggers
+  void details.offsetWidth;
+
   details.innerHTML = `
     <h2>${entry.task}</h2>
     <p>${entry.info || "No additional information available."}</p>
   `;
+
+  details.classList.add("show");
 }
