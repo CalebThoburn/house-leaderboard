@@ -149,7 +149,7 @@ body {
 }
 
 .quote-center {
-  transform: translateX(0%);
+  transform: translateX(100%);
   opacity: 1;
 }
 
