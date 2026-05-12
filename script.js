@@ -30,6 +30,7 @@ async function loadLeaderboard() {
 }
 
 function renderLeaderboard(data) {
+  console.log("Rendering leaderboard with data:", data);
   const list = document.getElementById("leaderboard");
 
   if (!list) {
@@ -52,15 +53,13 @@ function renderLeaderboard(data) {
 
       li.style.cursor = "pointer";
 
-      li.onclick = () => {
-  console.log("clicked:", entry.name);
-  showLeaderboardInfo(entry);
-};
+      li.onclick = () => showLeaderboardInfo(entry);
       list.appendChild(li);
     });
 }
 
 function showLeaderboardInfo(entry) {
+  console.log("Showing info for", entry.name);
   const details = document.getElementById("taskDetails");
   if (!details) return;
 
