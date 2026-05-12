@@ -125,6 +125,8 @@ function initQuotes() {
   const container = document.getElementById("quote");
   if (!container) return;
 
+  container.innerHTML = ""; // important safety reset
+
   const current = createQuoteElement(quotes[quoteIndex], "quote-item quote-center");
   container.appendChild(current);
 
