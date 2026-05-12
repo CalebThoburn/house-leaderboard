@@ -122,6 +122,7 @@ let quoteIndex = 0;
 let isAnimating = false;
 
 function initQuotes() {
+    console.log("Initializing quotes rotator...");
   const container = document.getElementById("quote");
   if (!container) return;
 
