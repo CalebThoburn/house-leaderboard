@@ -132,20 +132,20 @@ function initQuotes() {
 }
 
 function createQuoteElement(quote, className) {
-  const div = document.createElement("div");
-  div.className = className;
+    const div = document.createElement("div");
+    div.className = className;
+    console.log(quote);
+    div.innerHTML = `
+        <header class="quote-header">
+            <div class="quote-text">
+                “${quote.text}”
+            </div>
 
-div.innerHTML = `
-    <header class="quote-header">
-        <div class="quote-text">
-            “${quote.text}”
-        </div>
-
-        <div class="quote-author">
-            — ${quote.author}
-        </div>
-    </header>
-`;
+            <div class="quote-author">
+                — ${quote.author}
+            </div>
+        </header>
+    `;
 
   return div;
 }
