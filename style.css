@@ -147,16 +147,16 @@ body {
 }
 
 .quote-center {
-  transform: translateX(100%);
+  transform: translateX(1000%);
   opacity: 1;
 }
 
 .quote-left {
-  transform: translateX(-100%);
+  transform: translateX(-1000%);
   opacity: 0;
 }
 
 .quote-right {
-  transform: translateX(100%);
+  transform: translateX(1000%);
   opacity: 0;
 }
