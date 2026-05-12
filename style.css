@@ -76,3 +76,20 @@ body {
   font-size: 14px;
   opacity: 0.9;
 }
+
+#taskDetails {
+  padding: 10px;
+  background: #2e3f52;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+#taskDetails h2 {
+  margin-top: 0;
+  color: #ffffff;
+}
+
+#taskDetails p {
+  color: #d6e2ee;
+  line-height: 1.4;
+}
