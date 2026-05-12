@@ -145,17 +145,10 @@ body {
   margin-top: 6px;
   color: #a9b6c3;
 
-.quote-item {
+}.quote-item {
   position: absolute;
   width: 100%;
-  left: 0;
-  top: 0;
-
-  transition:
-    transform 0.5s ease,
-    opacity 0.5s ease;
-
-  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
 .quote-center {
