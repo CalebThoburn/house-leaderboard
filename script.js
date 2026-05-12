@@ -122,3 +122,27 @@ function showTaskInfo(entry) {
     details.classList.remove("hide");
   }, 200); // must match CSS transition timing roughly
 }
+
+const quotes = [
+  "Lock in.",
+  "Arrrgh.",
+  "Power comes from consistency.",
+  "Compete, adapt, overcome.",
+  "Small actions create large outcomes."
+];
+
+let quoteIndex = 0;
+
+function rotateQuotes() {
+  const quoteEl = document.getElementById("quote");
+
+  quoteEl.style.opacity = 0;
+
+  setTimeout(() => {
+    quoteIndex = (quoteIndex + 1) % quotes.length;
+    quoteEl.textContent = `"${quotes[quoteIndex]}"`;
+    quoteEl.style.opacity = 1;
+  }, 300);
+}
+
+setInterval(rotateQuotes, 4000);
