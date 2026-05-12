@@ -52,7 +52,10 @@ function renderLeaderboard(data) {
 
       li.style.cursor = "pointer";
 
-      li.onclick = () => showLeaderboardInfo(entry);
+      li.onclick = () => {
+  console.log("clicked:", entry.name);
+  showLeaderboardInfo(entry);
+};
       list.appendChild(li);
     });
 }
