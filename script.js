@@ -160,16 +160,13 @@ function rotateQuotes() {
 
   container.appendChild(next);
 
-  void next.offsetWidth;
-
-  if (current) {
-    current.classList.add("quote-left");
-  }
-
-  next.classList.add("quote-center");
+  requestAnimationFrame(() => {
+    if (current) current.classList.add("quote-left");
+    next.classList.add("quote-center");
+  });
 
   setTimeout(() => {
-    if (current) current.remove();
+    if (current && current.parentNode) current.remove();
   }, 500);
 
   quoteIndex = nextIndex;
