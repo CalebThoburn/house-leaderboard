@@ -36,32 +36,29 @@ async function loadLeaderboard() {
   }
 }
 
-function renderLeaderboard(data) {
-  const list = document.getElementById("leaderboard");
+function createPlaque(entry, valueKey, rank) {
+  const li = document.createElement("li");
 
-  if (!list) {
-    console.error("Leaderboard element missing");
-    return;
-  }
+  li.className = `leaderboard-plaque rank-${rank}`;
 
-  list.innerHTML = "";
+  const crown = rank === 1 ? "👑" : "";
 
-  data
-    .sort((a, b) => b.score - a.score)
-    .forEach(entry => {
-      const li = document.createElement("li");
+  const displayValue = entry[valueKey] ?? 0;
 
-      li.innerHTML = `
-        <img src="${entry.pfp || ''}" width="40" height="40"
-             style="border-radius:50%; margin-right:10px;">
-        <strong>${entry.name}</strong> — ${entry.score}
-      `;
+  li.innerHTML = `
+    <div class="plaque-left">
+      <span class="crown">${crown}</span>
+      <img src="${entry.pfp || ''}" width="40" height="40"
+           style="border-radius:50%;">
+      <strong>${entry.name}</strong>
+    </div>
 
-      li.style.cursor = "pointer";
+    <div class="plaque-score">
+      ${displayValue}
+    </div>
+  `;
 
-      li.onclick = () => showLeaderboardInfo(entry);
-      list.appendChild(li);
-    });
+  return li;
 }
 
 function showLeaderboardInfo(entry) {
@@ -125,6 +122,24 @@ function renderTasks(data) {
   });
 }
 
+function renderLeaderboard(data) {
+  const list = document.getElementById("leaderboard");
+  if (!list) return;
+
+  list.innerHTML = "";
+
+  const sorted = [...data].sort((a, b) => b.score - a.score);
+
+  sorted.forEach((entry, i) => {
+    const rank = i + 1;
+    const li = createPlaque(entry, "score", rank);
+
+    li.onclick = () => showLeaderboardInfo(entry);
+
+    list.appendChild(li);
+  });
+}
+
 /*************************************************
  * TASK DETAIL VIEW
  *************************************************/
@@ -136,12 +151,30 @@ async function showTaskInfo(entry) {
 
   setTimeout(async () => {
 
-    let leaderboardHTML = "";
+let leaderboardHTML = "";
 
-    // ONLY inject leaderboard if leadLogicIndex == 1
-    if (Number(entry.leadLogicIndex) === 1) {
-      leaderboardHTML = await buildTopSubsLeaderboard();
-    }
+if (Number(entry.leadLogicIndex) === 1) {
+  const res = await fetch("https://docs.google.com/spreadsheets/d/1ZUhDZwYB5N0KDUlnwKMnSE8qvnLgFvQG16m-ci1SUGE/export?format=csv");
+  const text = await res.text();
+
+  const parsed = Papa.parse(text, { skipEmptyLines: true });
+  const rows = parsed.data.slice(1);
+
+  const users = rows.map(r => ({
+    name: r[0],
+    pfp: r[2],
+    ytChannel: r[4]
+  }));
+
+  const withSubs = await Promise.all(
+    users.map(async u => ({
+      ...u,
+      subs: Number(await getSubs(u.ytChannel) || 0)
+    }))
+  );
+
+  leaderboardHTML = createTaskLeaderboard(withSubs);
+}
 
     details.innerHTML = `
       <h2>${entry.task}</h2>
@@ -156,44 +189,31 @@ async function showTaskInfo(entry) {
 
   }, 200);
 }
+function createTaskLeaderboard(users) {
+  const sorted = [...users].sort((a, b) => b.subs - a.subs);
 
-async function buildTopSubsLeaderboard() {
-  const res = await fetch("https://docs.google.com/spreadsheets/d/1ZUhDZwYB5N0KDUlnwKMnSE8qvnLgFvQG16m-ci1SUGE/export?format=csv");
-  const text = await res.text();
+  const top3 = sorted.slice(0, 3);
 
-  const parsed = Papa.parse(text, { skipEmptyLines: true });
-  const rows = parsed.data.slice(1);
+  const wrapper = document.createElement("div");
+  wrapper.className = "task-leaderboard";
 
-  const users = rows.map(r => ({
-    name: r[0],
-    pfp: r[2],
-    ytChannel: r[4]
-  }));
+  top3.forEach((u, i) => {
+    const rank = i + 1;
 
-  // get subs for all users
-  const withSubs = await Promise.all(
-    users.map(async u => {
-      const subs = await getSubs(u.ytChannel);
-      return { ...u, subs: Number(subs || 0) };
-    })
-  );
+    const li = createPlaque(
+      {
+        name: u.name,
+        pfp: u.pfp,
+        score: u.subs
+      },
+      "score",
+      rank
+    );
 
-  const top3 = withSubs
-    .sort((a, b) => b.subs - a.subs)
-    .slice(0, 3);
+    wrapper.appendChild(li);
+  });
 
-  return `
-    <div class="mini-leaderboard">
-      <h3>Top Subscribers</h3>
-      ${top3.map(u => `
-        <div class="mini-user">
-          <img src="${u.pfp}" width="30" height="30" style="border-radius:50%;">
-          <span>${u.name}</span>
-          <span>${u.subs.toLocaleString()}</span>
-        </div>
-      `).join("")}
-    </div>
-  `;
+  return wrapper.outerHTML;
 }
 
 /*************************************************
@@ -324,7 +344,7 @@ document.addEventListener("DOMContentLoaded", initQuotes);
 loadLeaderboard();
 
 async function getSubs(user) {
-  const apiKey = "YOUR_KEY";
+  const apiKey = "AIzaSyDB9tcTpzRXO3Iyv0U31Hdo6Vyjj0lGNJc";
 
   const channelId = await getChannelId(user);
   if (!channelId) return 0;

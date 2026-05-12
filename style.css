@@ -50,6 +50,56 @@ body {
   gap: 10px;
 }
 
+.leaderboard-plaque {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px 12px;
+  margin: 6px 0;
+
+  border-radius: 10px;
+  background: #243240;
+  color: #e6eef5;
+
+  transition: transform 0.2s ease;
+}
+
+.leaderboard-plaque:hover {
+  transform: scale(1.02);
+}
+
+.plaque-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.plaque-score {
+  font-weight: bold;
+  text-align: right;
+  min-width: 60px;
+}
+
+.rank-1 {
+  background: linear-gradient(90deg, #d4af37, #f6e27a);
+  color: #1b1b1b;
+  transform: scale(1.05);
+}
+
+.rank-2 {
+  background: linear-gradient(90deg, #b0b7c3, #8f98a3);
+}
+
+.rank-3 {
+  background: linear-gradient(90deg, #cd7f32, #b87333);
+}
+
+.crown {
+  font-size: 14px;
+  margin-right: 6px;
+}
+
 #taskContainer {
   display: flex;
   flex-direction: column;
