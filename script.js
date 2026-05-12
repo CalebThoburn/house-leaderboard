@@ -271,14 +271,15 @@ document.addEventListener("DOMContentLoaded", initQuotes);
 
 loadLeaderboard();
 
-async function getMrBeastSubs() {
+async function getSubs(user) {
   console.log("Fetching Mr. Beast subscriber count...");
   const apiKey = "AIzaSyDB9tcTpzRXO3Iyv0U31Hdo6Vyjj0lGNJc";
 
   const url =
-    "https://www.googleapis.com/youtube/v3/channels" +
-    "?part=statistics" +
-    "&id=UCX6OQ3DkcsbYNE6H8uQQuVA" +
+    "https://www.googleapis.com/youtube/v3/search" +
+    "?part=snippet" +
+    "&q=@" + user +
+    "&type=channel" +
     `&key=${apiKey}`;
 
   const res = await fetch(url);
@@ -289,4 +290,5 @@ async function getMrBeastSubs() {
   );
 }
 
-getMrBeastSubs();
+getSubs("MrBeast");
+getSubs("wazzotv");
