@@ -130,27 +130,24 @@ const quotes = [
 ];
 
 let index = 0;
-
 const quoteContainer = document.getElementById("quote");
 
-// create initial quote
-quoteContainer.innerHTML = createQuoteHTML(quotes[0]);
-let current = quoteContainer.firstElementChild;
+// INITIAL RENDER (THIS WAS MISSING)
+quoteContainer.innerHTML = `
+  <div class="quote-item quote-center">
+    <div class="quote-text">“${quotes[0].text}”</div>
+    <div class="quote-author">— ${quotes[0].author}</div>
+  </div>
+`;
 
-function createQuoteHTML(q) {
-  return `
-    <div class="quote-item quote-center">
-      <div class="quote-text">“${q.text}”</div>
-      <div class="quote-author">— ${q.author}</div>
-    </div>
-  `;
-}
+let current = quoteContainer.firstElementChild;
 
 function rotateQuotes() {
   const nextIndex = (index + 1) % quotes.length;
 
   const next = document.createElement("div");
   next.className = "quote-item quote-right";
+
   next.innerHTML = `
     <div class="quote-text">“${quotes[nextIndex].text}”</div>
     <div class="quote-author">— ${quotes[nextIndex].author}</div>
@@ -158,18 +155,17 @@ function rotateQuotes() {
 
   quoteContainer.appendChild(next);
 
-  // force reflow so transition triggers
   void next.offsetWidth;
 
-  // animate current out left
-  current.className = "quote-item quote-left";
+  current.classList.remove("quote-center");
+  current.classList.add("quote-left");
 
-  // animate next into center
-  next.className = "quote-item quote-center";
+  next.classList.add("quote-center");
 
-  // cleanup old element after animation
   setTimeout(() => {
-    quoteContainer.removeChild(current);
+    if (current && current.parentNode) {
+      current.remove();
+    }
     current = next;
   }, 500);
 
@@ -177,4 +173,3 @@ function rotateQuotes() {
 }
 
 setInterval(rotateQuotes, 12000);
-initializeQuotes();
