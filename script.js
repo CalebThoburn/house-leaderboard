@@ -21,7 +21,9 @@ async function loadLeaderboard() {
         score: Number((cols[1] || 0).trim()),
         pfp: (cols[2] || "").trim(),
         descrip: (cols[3] || "").trim(),
+        ytChannel: (cols[4] || "").trim(),
         task: (cols[13] || "").trim(),
+        leadLogicIndex: Number((cols[14] || 0).trim()),
         info: (cols[15] || "").trim()
       };
     });
