@@ -8,10 +8,11 @@ async function loadLeaderboard() {
     const cols = row.split(",");
 
     return {
-      name: (cols[0] || "").trim(),
-      score: Number((cols[1] || 0).trim()),
-      pfp: (cols[2] || "").trim(),
-      task: (cols[4] || "").trim()   // 👈 COLUMN 5 (E)
+    name: (cols[0] || "").trim(),
+    score: Number((cols[1] || 0).trim()),
+    pfp: (cols[2] || "").trim(),
+    task: (cols[4] || "").trim(),   // column E (5th)
+    info: (cols[6] || "").trim()    // column G (7th)
     };
   });
 
@@ -62,10 +63,13 @@ function renderTasks(data) {
 
     plaque.innerHTML = `
       <div class="task-title">Task ${entry.task}</div>
-      <div class="task-text">${entry.task}</div>
     `;
 
     taskContainer.appendChild(plaque);
+
+    plaque.onclick = () => showTaskInfo(entry);
+
+
   });
 }
 
@@ -94,5 +98,14 @@ function selectTask(taskId) {
   details.innerHTML = `
     <h3>${task.title}</h3>
     <p>${task.desc}</p>
+  `;
+}
+
+function showTaskInfo(entry) {
+  const details = document.getElementById("taskDetails");
+
+  details.innerHTML = `
+    <h2>${entry.task}</h2>
+    <p>${entry.info || "No additional information available."}</p>
   `;
 }
