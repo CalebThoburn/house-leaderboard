@@ -62,7 +62,7 @@ function renderTasks(data) {
     plaque.onclick = () => selectTask(entry);
 
     plaque.innerHTML = `
-      <div class="task-title">Task ${entry.task}</div>
+      <div class="task-title">${entry.task}</div>
     `;
 
     taskContainer.appendChild(plaque);
