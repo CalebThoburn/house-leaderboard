@@ -180,3 +180,20 @@ function nextQuote() {
 document.addEventListener("DOMContentLoaded", initQuotes);
 
 loadLeaderboard();
+
+function setQuote(newText, newAuthor) {
+  const quote = document.getElementById("quote");
+
+  // fade out
+  quote.style.opacity = 0;
+
+  setTimeout(() => {
+    quote.innerHTML = `
+      <div class="quote-text">${newText}</div>
+      <div class="quote-author">${newAuthor}</div>
+    `;
+
+    // fade in
+    quote.style.opacity = 1;
+  }, 300);
+}
