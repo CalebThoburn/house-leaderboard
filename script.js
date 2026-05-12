@@ -160,7 +160,7 @@ function nextQuote() {
 const container = document.getElementById("quote-header");
   const current = container.querySelector(".quote-item.quote-center");
 
-  quoteIndex = (quoteIndex + 1) % quotes.length;
+  Index = (quoteIndex + 1) % quotes.length;
   const next = createQuoteElement(quotes[quoteIndex], "quote-item quote-right");
 
   container.appendChild(next);
