@@ -157,8 +157,8 @@ function nextQuote() {
   if (isAnimating) return;
   isAnimating = true;
 
-  const container = document.getElementById("quote");
-  const current = container.querySelector(".quote-item");
+const container = document.getElementById("quote-header");
+  const current = container.querySelector(".quote-item.quote-center");
 
   quoteIndex = (quoteIndex + 1) % quotes.length;
   const next = createQuoteElement(quotes[quoteIndex], "quote-item quote-right");
