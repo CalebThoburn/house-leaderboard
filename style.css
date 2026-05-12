@@ -121,17 +121,26 @@ body {
 }
 
 .quote-text {
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
   font-style: italic;
   font-size: 60px;
   color: #e6eef5;
+  position: relative;
+  overflow: hidden;
 }
 
 .quote-author {
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
   font-size: 16px;
   margin-top: 6px;
   color: #8b95a0;
+  position: relative;
+  overflow: hidden;
+}
 
-}.quote-item {
+.quote-item {
   position: absolute;
   width: 100%;
   transition: transform 0.5s ease, opacity 0.5s ease;
