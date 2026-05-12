@@ -1,33 +1,33 @@
 body {
   margin: 0;
+  height: 100vh;
+  overflow: hidden; /* stops whole page scrolling */
   font-family: Arial, sans-serif;
   background: #1f2a36;
-  color: #e6eef5;
-  height: 100vh;
 }
 
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* THIS is what makes tri-fold work */
+  grid-template-columns: 1fr 1fr 1fr;
   height: 100vh;
 }
 
 .panel {
   padding: 20px;
-  overflow-y: auto;
+  overflow-y: auto;   /* enables vertical scroll inside each panel */
+  height: 100vh;      /* ensures full height constraint */
 }
 
-/* LEFT */
 .left {
   background: #263445;
+  border-right: 1px solid #2c3b4a;
 }
 
-/* MIDDLE */
 .middle {
   background: #223041;
+  border-right: 1px solid #2c3b4a;
 }
 
-/* RIGHT */
 .right {
   background: #1b2530;
 }
